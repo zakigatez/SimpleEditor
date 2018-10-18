@@ -55,6 +55,9 @@
         </div>
     <script type="text/javascript">
 
+
+        /** code mirror settings to show html + javascript tags**/
+
         var javascript = CodeMirror.fromTextArea(document.getElementById("javascript"),{
             mode:"javascript",
             theme:"dracula",
@@ -68,6 +71,8 @@
             autoCloseTags:true
         })
 
+        /** preview html template**/
+
         $('#run').click(function ()
         {
             $('#body').children().remove();
@@ -77,11 +82,19 @@
             $("#addedscript").append(javascript.getValue());
 
         });
+
+
+        /** csrf token setup **/
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+
+        /** store template **/
+
         $("#save").click(function(e) {
             e.preventDefault();
             $.ajax({
