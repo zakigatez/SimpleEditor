@@ -10,98 +10,44 @@ use Validator;
 
 class ThemeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    function create()
     {
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
+        $theme = new Theme();
 
-            $theme = new Theme();
-
-        $validator = Validator::make($request->all(), [
-            'script' => 'required',
-            'body' => 'required',
+        $validator = Validator::make(\request()->all(), [
+            'name' => 'required|unique',
         ]);
-
-
-
-        if ($validator->fails())
-            {
-                return response()->json(['errors'=>$validator->errors()]);
-            }
-                $theme->body = $request->body;
-                $theme->script = $request->script;
-                $theme->save();
-                return response()->json(['success'=>'Record is successfully added'],200);
-
-
+        $theme->name = \request()->name;
+        $theme->save();
+        return response()->json(['success'=>'Record is successfully added'],200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Theme  $theme
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Theme $theme)
+
+    public function show($id)
     {
-        //
+        $theme = Theme::find($id);
+        return view("admin","theme");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Theme  $theme
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Theme $theme)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Theme  $theme
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Theme $theme)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Theme  $theme
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Theme $theme)
+    public function destroy($id)
     {
-        //
+        $theme = Theme::find($id);
+        $this->destroy();
     }
+
+
 }

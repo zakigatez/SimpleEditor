@@ -12,7 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin');
 });
 
+
+
 Route::post('/theme/create',"ThemeController@store");
+Route::get('/{id}',"ThemeController@show");
+Route::get('/{id}/CreatePage',"PageController@store");
+
